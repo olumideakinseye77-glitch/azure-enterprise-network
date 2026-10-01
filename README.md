@@ -72,7 +72,7 @@ Terraform will be used **before** resources are created in Azure. This is differ
 
 - [x] Create GitHub repository
 - [x] Create Terraform project structure
-- [ ] Design the IP address plan
+- [x] Design the IP address plan
 - [ ] Build the hub VNet
 - [ ] Build application and data spoke VNets
 - [ ] Configure VNet peering
