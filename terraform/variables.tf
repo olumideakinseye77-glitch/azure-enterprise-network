@@ -15,3 +15,21 @@ variable "project_name" {
   type        = string
   default     = "enterprise-network"
 }
+
+variable "hub_vnet_cidr" {
+  description = "Address space for the Hub VNet."
+  type        = string
+  default     = "10.10.0.0/16"
+}
+
+variable "hub_shared_subnet_cidr" {
+  description = "CIDR for the shared-services subnet in the Hub VNet."
+  type        = string
+  default     = "10.10.1.0/24"
+}
+
+variable "hub_dns_subnet_cidr" {
+  description = "CIDR for the DNS/shared name-resolution subnet in the Hub VNet."
+  type        = string
+  default     = "10.10.2.0/24"
+}
