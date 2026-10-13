@@ -1,5 +1,10 @@
-# Azure resources will be added after the IP addressing
-# and hub-and-spoke network design has been agreed.
-#
-# Starting with an empty infrastructure file is intentional:
-# design first, deploy second.
+resource "azurerm_resource_group" "main" {
+  name     = "rg-olu-enterprise-network"
+  location = var.location
+
+  tags = {
+    Environment = var.environment
+    Project     = var.project_name
+    ManagedBy   = "Terraform"
+  }
+}
