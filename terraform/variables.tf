@@ -39,3 +39,39 @@ variable "hub_dns_subnet_cidr" {
   type        = string
   default     = "10.10.2.0/24"
 }
+
+variable "app_spoke_vnet_cidr" {
+  description = "Address space for the application spoke VNet."
+  type        = string
+  default     = "10.20.0.0/16"
+}
+
+variable "app_subnet_cidr" {
+  description = "CIDR for the application subnet."
+  type        = string
+  default     = "10.20.1.0/24"
+}
+
+variable "app_integration_subnet_cidr" {
+  description = "CIDR for the application integration subnet."
+  type        = string
+  default     = "10.20.2.0/24"
+}
+
+variable "data_spoke_vnet_cidr" {
+  description = "Address space for the data spoke VNet."
+  type        = string
+  default     = "10.30.0.0/16"
+}
+
+variable "private_endpoints_subnet_cidr" {
+  description = "CIDR for the private endpoint subnet."
+  type        = string
+  default     = "10.30.1.0/24"
+}
+
+variable "data_subnet_cidr" {
+  description = "CIDR for the data subnet."
+  type        = string
+  default     = "10.30.2.0/24"
+}
