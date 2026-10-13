@@ -1,3 +1,9 @@
+variable "subscription_id" {
+  description = "Azure subscription used for the enterprise network."
+  type        = string
+  default     = "0be06fbd-8a1c-4544-8855-fcea8dfd8a76"
+}
+
 variable "location" {
   description = "Azure region used for the enterprise network."
   type        = string
