@@ -75,3 +75,9 @@ variable "data_subnet_cidr" {
   type        = string
   default     = "10.30.2.0/24"
 }
+
+
+variable "ssh_public_key" {
+  description = "SSH public key used by temporary lab VMs such as the hub NVA."
+  type        = string
+}
