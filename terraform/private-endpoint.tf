@@ -11,7 +11,7 @@ resource "azurerm_storage_account" "private_data" {
   account_kind             = "StorageV2"
   min_tls_version          = "TLS1_2"
 
-  public_network_access_enabled   = false
+  public_network_access           = "Disabled"
   allow_nested_items_to_be_public = false
 
   tags = {
@@ -35,25 +35,22 @@ resource "azurerm_private_dns_zone" "blob" {
 
 resource "azurerm_private_dns_zone_virtual_network_link" "blob_hub" {
   name                  = "link-blob-hub"
-  resource_group_name   = azurerm_resource_group.main.name
-  private_dns_zone_name = azurerm_private_dns_zone.blob.name
-  virtual_network_id    = azurerm_virtual_network.hub.id
+  private_dns_zone_id = azurerm_private_dns_zone.blob.id
+  virtual_network_id  = azurerm_virtual_network.hub.id
   registration_enabled  = false
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "blob_app" {
   name                  = "link-blob-app"
-  resource_group_name   = azurerm_resource_group.main.name
-  private_dns_zone_name = azurerm_private_dns_zone.blob.name
-  virtual_network_id    = azurerm_virtual_network.app_spoke.id
+  private_dns_zone_id = azurerm_private_dns_zone.blob.id
+  virtual_network_id  = azurerm_virtual_network.app_spoke.id
   registration_enabled  = false
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "blob_data" {
   name                  = "link-blob-data"
-  resource_group_name   = azurerm_resource_group.main.name
-  private_dns_zone_name = azurerm_private_dns_zone.blob.name
-  virtual_network_id    = azurerm_virtual_network.data_spoke.id
+  private_dns_zone_id = azurerm_private_dns_zone.blob.id
+  virtual_network_id  = azurerm_virtual_network.data_spoke.id
   registration_enabled  = false
 }
 
