@@ -24,11 +24,25 @@ resource "azurerm_network_security_group" "data" {
   }
 }
 
-resource "azurerm_network_security_rule" "allow_app_to_data" {
-  name                        = "Allow-App-To-Data"
+resource "azurerm_network_security_rule" "allow_app_to_data_https" {
+  name                        = "Allow-App-To-Data-HTTPS"
   priority                    = 100
   direction                   = "Inbound"
   access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "443"
+  source_address_prefix       = var.app_subnet_cidr
+  destination_address_prefix  = var.data_subnet_cidr
+  resource_group_name         = azurerm_resource_group.main.name
+  network_security_group_name = azurerm_network_security_group.data.name
+}
+
+resource "azurerm_network_security_rule" "deny_other_app_to_data" {
+  name                        = "Deny-Other-App-To-Data"
+  priority                    = 200
+  direction                   = "Inbound"
+  access                      = "Deny"
   protocol                    = "*"
   source_port_range           = "*"
   destination_port_range      = "*"
