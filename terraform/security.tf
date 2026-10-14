@@ -61,3 +61,32 @@ resource "azurerm_subnet_network_security_group_association" "data" {
   subnet_id                 = azurerm_subnet.data.id
   network_security_group_id = azurerm_network_security_group.data.id
 }
+
+
+resource "azurerm_network_security_rule" "allow_app_to_data_https_outbound" {
+  name                        = "Allow-App-To-Data-HTTPS-Outbound"
+  priority                    = 100
+  direction                   = "Outbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "443"
+  source_address_prefix       = var.app_subnet_cidr
+  destination_address_prefix  = var.data_subnet_cidr
+  resource_group_name         = azurerm_resource_group.main.name
+  network_security_group_name = azurerm_network_security_group.app.name
+}
+
+resource "azurerm_network_security_rule" "deny_other_app_to_data_outbound" {
+  name                        = "Deny-Other-App-To-Data-Outbound"
+  priority                    = 200
+  direction                   = "Outbound"
+  access                      = "Deny"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = var.app_subnet_cidr
+  destination_address_prefix  = var.data_subnet_cidr
+  resource_group_name         = azurerm_resource_group.main.name
+  network_security_group_name = azurerm_network_security_group.app.name
+}
