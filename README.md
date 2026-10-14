@@ -75,7 +75,7 @@ Terraform will be used **before** resources are created in Azure. This is differ
 - [x] Design the IP address plan
 - [x] Build the hub VNet
 - [x] Build application and data spoke VNets
-- [ ] Configure VNet peering
+- [x] Configure VNet peering
 - [ ] Design and apply subnet-level NSGs
 - [ ] Add routing / UDRs
 - [ ] Add Private Endpoint connectivity
