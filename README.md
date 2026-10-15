@@ -77,14 +77,14 @@ Terraform will be used **before** resources are created in Azure. This is differ
 - [x] Build application and data spoke VNets
 - [x] Configure VNet peering
 - [x] Design and apply subnet-level NSGs
-- [ ] Add routing / UDRs
+- [x] Add routing / UDRs
 - [x] Add Private Endpoint connectivity
 - [x] Configure Azure Private DNS
 - [ ] Add monitoring and network diagnostics
 - [ ] Configure remote Terraform state
 - [ ] Add GitHub Actions validation
 - [ ] Configure Azure OIDC authentication
-- [ ] Perform deliberate network failure tests
+- [x] Perform deliberate network failure tests
 - [ ] Complete final architecture and troubleshooting documentation
 
 ## Engineering Approach
