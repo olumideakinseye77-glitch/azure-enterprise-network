@@ -14,6 +14,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   terraform:
@@ -39,3 +40,13 @@ jobs:
 
       - name: Terraform validate
         run: terraform validate
+
+      - name: Azure login with OIDC
+        uses: azure/login@v2
+        with:
+          client-id: 2fe86e1c-4488-448e-bc02-9fcfdaa714fe
+          tenant-id: f7a4a0bf-cedb-46e1-aeae-d875e38e3dbf
+          subscription-id: 0be06fbd-8a1c-4544-8855-fcea8dfd8a76
+
+      - name: Verify Azure identity
+        run: az account show --output table
