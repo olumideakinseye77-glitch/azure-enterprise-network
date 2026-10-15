@@ -35,22 +35,22 @@ resource "azurerm_private_dns_zone" "blob" {
 
 resource "azurerm_private_dns_zone_virtual_network_link" "blob_hub" {
   name                  = "link-blob-hub"
-  private_dns_zone_id = azurerm_private_dns_zone.blob.id
-  virtual_network_id  = azurerm_virtual_network.hub.id
+  private_dns_zone_id   = azurerm_private_dns_zone.blob.id
+  virtual_network_id    = azurerm_virtual_network.hub.id
   registration_enabled  = false
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "blob_app" {
   name                  = "link-blob-app"
-  private_dns_zone_id = azurerm_private_dns_zone.blob.id
-  virtual_network_id  = azurerm_virtual_network.app_spoke.id
+  private_dns_zone_id   = azurerm_private_dns_zone.blob.id
+  virtual_network_id    = azurerm_virtual_network.app_spoke.id
   registration_enabled  = false
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "blob_data" {
   name                  = "link-blob-data"
-  private_dns_zone_id = azurerm_private_dns_zone.blob.id
-  virtual_network_id  = azurerm_virtual_network.data_spoke.id
+  private_dns_zone_id   = azurerm_private_dns_zone.blob.id
+  virtual_network_id    = azurerm_virtual_network.data_spoke.id
   registration_enabled  = false
 }
 
