@@ -6,8 +6,8 @@ This project is intentionally separate from the highly available web application
 
 ## Project Status
 
-**Current phase:** Network design and Terraform foundation  
-**Overall progress:** Starting
+**Current phase:** Complete  
+**Overall progress:** 100%
 
 ## Business Scenario
 
@@ -35,25 +35,40 @@ This project will demonstrate:
 - Azure OIDC authentication
 - Documentation and architecture diagrams
 
-## Planned Architecture
+## Architecture
 
 ```mermaid
-flowchart TD
-    HUB[Hub VNet\nShared Networking]
+flowchart LR
+    APP[App Spoke VNet\n10.20.0.0/16]
+    HUB[Hub VNet\n10.10.0.0/16]
+    DATA[Data Spoke VNet\n10.30.0.0/16]
 
-    HUB --> APP[App Spoke VNet]
-    HUB --> DATA[Data Spoke VNet]
+    APP -->|VNet Peering| HUB
+    HUB -->|VNet Peering| DATA
 
-    APP --> APPSUBNET[Application Subnet]
-    DATA --> PESUBNET[Private Endpoint Subnet]
+    APPSUB[App Subnet\n10.20.1.0/24]
+    NVA[Linux NVA\n10.10.1.4]
+    DATASUB[Data Subnet\n10.30.2.0/24]
+    PESUB[Private Endpoint Subnet\n10.30.1.0/24]
+    PE[Blob Private Endpoint]
+    SA[Private Storage Account]
+    DNS[Private DNS\nprivatelink.blob.core.windows.net]
 
-    PESUBNET --> PE[Private Endpoint]
-    PE --> PAAS[Azure PaaS Service]
+    APP --> APPSUB
+    HUB --> NVA
+    DATA --> DATASUB
+    DATA --> PESUB
+    PESUB --> PE
+    PE --> SA
+    DNS --- APP
+    DNS --- HUB
+    DNS --- DATA
 
-    HUB --> DNS[Private DNS / Shared Services]
+    APPSUB -->|UDR via 10.10.1.4| NVA
+    NVA -->|Forwarded traffic| DATASUB
 ```
 
-The final design will evolve as the project progresses. Every major networking decision will be documented with the reason behind it.
+The final design uses hub-and-spoke networking with non-transitive VNet peering, a Linux NVA for spoke-to-spoke forwarding, UDRs on the application and data subnets, subnet-level NSGs, Private Endpoint connectivity, and Azure Private DNS.
 
 ## Terraform Structure
 
@@ -80,12 +95,12 @@ Terraform will be used **before** resources are created in Azure. This is differ
 - [x] Add routing / UDRs
 - [x] Add Private Endpoint connectivity
 - [x] Configure Azure Private DNS
-- [ ] Add monitoring and network diagnostics
-- [ ] Configure remote Terraform state
-- [ ] Add GitHub Actions validation
-- [ ] Configure Azure OIDC authentication
+- [x] Add monitoring and network diagnostics
+- [x] Configure remote Terraform state
+- [x] Add GitHub Actions validation
+- [x] Configure Azure OIDC authentication
 - [x] Perform deliberate network failure tests
-- [ ] Complete final architecture and troubleshooting documentation
+- [x] Complete final architecture and troubleshooting documentation
 
 ## Engineering Approach
 
@@ -106,3 +121,17 @@ Lesson learned
 ```
 
 The objective is not only to build a working Azure network, but to demonstrate the reasoning and troubleshooting expected from a Cloud Engineer.
+
+
+## Validation Highlights
+
+- Terraform state is stored remotely in Azure Storage.
+- GitHub Actions runs `terraform fmt -check`, `terraform init -backend=false`, and `terraform validate`.
+- GitHub Actions authenticates to Azure using OIDC with no stored client secret.
+- Network Watcher confirmed TCP 443 from the App VM to the Data VM is reachable through the Hub NVA.
+- Network Watcher confirmed TCP 8080 is blocked by the explicit Data NSG deny rule.
+- The routing failure and remediation are documented in `docs/troubleshooting.md`.
+
+## Key Engineering Lessons
+
+Azure VNet peering is non-transitive. App-to-Hub and Data-to-Hub peerings do not automatically create App-to-Data connectivity. The working design required UDRs plus a forwarding device in the hub. The troubleshooting process used Network Watcher to identify the missing route and NSG behaviour before implementing the NVA remediation.
