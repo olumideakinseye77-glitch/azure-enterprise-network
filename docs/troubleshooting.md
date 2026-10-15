@@ -35,3 +35,15 @@ The Terraform configuration was extended with:
 ### Validation
 
 After deployment, rerun Network Watcher Connection Troubleshoot and direct TCP tests to prove TCP 443 is reachable while non-approved ports remain blocked.
+
+
+## Final validation
+
+After the routing remediation was deployed:
+
+- Network Watcher reported TCP 443 as `Reachable`.
+- The path traversed the Hub NVA at `10.10.1.4`.
+- All 66 probes to TCP 443 succeeded.
+- TCP 8080 was intentionally tested and blocked.
+- Network Watcher identified the explicit `Deny-Other-App-To-Data` NSG rule on the Data subnet.
+- This confirmed both the UDR/NVA routing path and least-privilege NSG enforcement were working as designed.
