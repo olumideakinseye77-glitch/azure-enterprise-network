@@ -2,22 +2,21 @@
 
 An Azure Cloud Engineering portfolio project focused on designing and operating an enterprise-style network using **Terraform-first Infrastructure as Code**.
 
-This project is intentionally separate from the highly available web application project. The goal here is to go deeper into **Azure networking, private connectivity, DNS, routing, security, monitoring, and troubleshooting**.
+Building on my first web application project, I challenged myself to understand **Azure networking, private connectivity, DNS, routing, security, monitoring and troubleshooting** in greater depth.
 
 ## Project Status
 
-**Current phase:** Complete  
-**Overall progress:** 100%
+**Status:** Completed lab, with validation highlights and documented troubleshooting below.
 
 ## Business Scenario
 
 A fictional organisation needs a secure Azure network that can host multiple workloads while keeping shared services centrally managed.
 
-The environment will use a **hub-and-spoke architecture** so that shared networking services can live in the hub while application/data workloads are isolated in separate spokes.
+The lab uses a **hub-and-spoke architecture** so that shared networking services can live in the hub while application/data workloads are isolated in separate spokes.
 
 ## Target Skills
 
-This project will demonstrate:
+The project covers:
 
 - Azure Virtual Networks and subnet design
 - CIDR planning
@@ -81,7 +80,7 @@ terraform/
 └── outputs.tf
 ```
 
-Terraform will be used **before** resources are created in Azure. This is different from Project 1, where existing resources were later imported into Terraform.
+Infrastructure was defined in Terraform before deployment. This is different from Project 1, where existing resources were later imported into Terraform.
 
 ## Project Roadmap
 
@@ -104,7 +103,7 @@ Terraform will be used **before** resources are created in Azure. This is differ
 
 ## Engineering Approach
 
-For each major task, this repository will document:
+For each major task, the engineering approach follows:
 
 ```text
 Requirement
@@ -135,3 +134,9 @@ The objective is not only to build a working Azure network, but to demonstrate t
 ## Key Engineering Lessons
 
 Azure VNet peering is non-transitive. App-to-Hub and Data-to-Hub peerings do not automatically create App-to-Data connectivity. The working design required UDRs plus a forwarding device in the hub. The troubleshooting process used Network Watcher to identify the missing route and NSG behaviour before implementing the NVA remediation.
+
+## What I want to learn next
+
+After exploring network isolation and connectivity, I wanted to challenge myself with who can access Azure resources and how those permissions are governed. [Project 3: Azure Identity, Security & Governance](../azure-identity-security-governance) focuses on least privilege, managed identities, Key Vault and policy enforcement.
+
+This is an enterprise-style learning lab, not a claim of operating a production enterprise network.
