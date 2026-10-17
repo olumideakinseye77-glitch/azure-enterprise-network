@@ -137,6 +137,6 @@ Azure VNet peering is non-transitive. App-to-Hub and Data-to-Hub peerings do not
 
 ## What I want to learn next
 
-After exploring network isolation and connectivity, I wanted to challenge myself with who can access Azure resources and how those permissions are governed. [Project 3: Azure Identity, Security & Governance](../azure-identity-security-governance) focuses on least privilege, managed identities, Key Vault and policy enforcement.
+After exploring network isolation and connectivity, I wanted to challenge myself with who can access Azure resources and how those permissions are governed. [Project 3: Azure Identity, Security & Governance](https://github.com/olumideakinseye77-glitch/azure-identity-security-governance) focuses on least privilege, managed identities, Key Vault and policy enforcement.
 
 This is an enterprise-style learning lab, not a claim of operating a production enterprise network.
