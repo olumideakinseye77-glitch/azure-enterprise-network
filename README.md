@@ -1,5 +1,8 @@
 # Azure Enterprise Network
 
+[Portfolio home](https://github.com/olumideakinseye77-glitch/it-cloud-portfolio) · [All Azure projects](https://github.com/olumideakinseye77-glitch/it-cloud-portfolio/tree/main/azure-projects)
+
+
 An Azure Cloud Engineering portfolio project focused on designing and operating an enterprise-style network using **Terraform-first Infrastructure as Code**.
 
 Building on my first web application project, I challenged myself to understand **Azure networking, private connectivity, DNS, routing, security, monitoring and troubleshooting** in greater depth.
