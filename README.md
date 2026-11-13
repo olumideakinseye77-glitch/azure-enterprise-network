@@ -11,6 +11,20 @@ Building on my first web application project, I challenged myself to understand 
 
 **Status:** Completed lab, with validation highlights and documented troubleshooting below.
 
+## Interview walkthrough
+
+> I built a hub-and-spoke network in Terraform. A connection from the app spoke to the data spoke failed because peering didn't provide an end-to-end route and the app NSG lacked the outbound allow. I added routes in both directions, configured a Linux forwarding appliance and scoped the NSG rules. Network Watcher confirmed TCP 443 through the hub and showed TCP 8080 was denied.
+
+| Choice | Why it fit this lab | When I'd choose the alternative |
+| --- | --- | --- |
+| Hub-and-spoke plus user-defined routes | The spokes stayed separate, and the routes deliberately sent their traffic through a shared forwarding point. | Direct peering would be simpler for two networks if central inspection and transit were outside the requirements. |
+| Linux NVA and subnet NSGs | The VM made forwarding behaviour observable, while NSGs controlled which traffic could reach the workloads. | For managed filtering and operational support I'd evaluate Azure Firewall. The lab's single NVA is a single point of failure. |
+| Blob private endpoint and Private DNS | The storage account had public network access disabled. A private endpoint provided a private IP, and Private DNS supplied the name resolution path. | A service endpoint with storage network rules could suit a design that can use the service's public endpoint with restricted network access. |
+
+**How did you distinguish routing from filtering?** I checked the next hop and the NSG result separately. After the change I checked an allowed port and a deliberately denied port. The published TCP tests target a data VM. A Blob data-access test would need its own evidence.
+
+[Network Watcher troubleshooting evidence](docs/troubleshooting.md) · [Portfolio interview guide](https://github.com/olumideakinseye77-glitch/it-cloud-portfolio/blob/main/INTERVIEW-GUIDE.md)
+
 ## Business Scenario
 
 A fictional organisation needs a secure Azure network that can host multiple workloads while keeping shared services centrally managed.
